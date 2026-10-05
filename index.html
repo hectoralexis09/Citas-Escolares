@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Control Escolar</title>
+<style>
+*{
+    box-sizing:border-box;
+}
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#eaf9fa;
+    color:#244b52;
+}
+/* =========================
+   LOGIN
+========================= */
+.login{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg,#d9f4f5,#b8e5ea);
+}
+.login-box{
+    width:420px;
+    background:white;
+    padding:40px;
+    border-radius:18px;
+    box-shadow:0 10px 30px rgba(0,0,0,.15);
+    text-align:center;
+}
+.logo{
+    width:80px;
+    height:80px;
+    margin:auto;
+    border-radius:50%;
+    background:#54bfc5;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+    font-weight:bold;
+}
+.login-box h1{
+    color:#278b96;
+    margin-bottom:5px;
+}
+.login-box p{
+    color:#72969b;
+}
+input,select,textarea{
+    width:100%;
+    padding:12px;
+    border:1px solid #a8d9dd;
+    border-radius:8px;
+    margin-top:6px;
+    margin-bottom:15px;
+    font-size:15px;
+    outline:none;
+}
+input:focus,select:focus,textarea:focus{
+    border-color:#42adb5;
+}
+button{
+    border:none;
+    border-radius:8px;
+    padding:11px 17px;
+    cursor:pointer;
+    font-weight:bold;
+}
+.btn-principal{
+    background:#3caeb7;
+    color:white;
+}
+.btn-principal:hover{
+    background:#278f98;
+}
+.btn-rojo{
+    background:#df6b6b;
+    color:white;
+}
+.btn-gris{
+    background:#78999d;
+    color:white;
+}
+/* =========================
+   SISTEMA
+========================= */
+#sistema{
+    display:none;
+    min-height:100vh;
+}
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    width:245px;
+    background:#247f89;
+    color:white;
+    padding:25px 15px;
+}
+.sidebar h2{
+    text-align:center;
+    margin-top:0;
+}
+.sidebar button{
+    display:block;
+    width:100%;
+    margin:6px 0;
+    background:#3199a2;
+    color:white;
+    text-align:left;
+}
+.sidebar button:hover{
+    background:#52bfc5;
+}
+.usuario{
+    position:absolute;
+    bottom:20px;
+    left:15px;
+    right:15px;
+    background:#1d6e77;
+    padding:15px;
+    border-radius:10px;
+    text-align:center;
+}
+.contenido{
+    margin-left:245px;
+    padding:25px;
+}
+.encabezado{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    margin-bottom:20px;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+.encabezado h1{
+    margin:0;
+    color:#267f89;
+}
+.encabezado p{
+    color:#71969b;
+}
+/* =========================
+   TARJETAS
+========================= */
+.tarjetas{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+}
+.tarjeta{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+.tarjeta h3{
+    color:#6a9297;
+    margin:0;
+    font-size:14px;
+}
+.tarjeta strong{
+    display:block;
+    font-size:28px;
+    color:#258995;
+    margin-top:8px;
+}
+/* =========================
+   SECCIONES
+========================= */
+.seccion{
+    display:none;
+}
+.seccion.activa{
+    display:block;
+}
+.panel{
+    background:white;
+    padding:22px;
+    border-radius:12px;
+    margin-bottom:20px;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+.panel h2{
+    color:#278a94;
+}
+/* =========================
+   FORMULARIOS
+========================= */
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+.campo label{
+    font-weight:bold;
+    color:#416e74;
+}
+/* =========================
+   TABLAS
+========================= */
+.tabla-contenedor{
+    overflow-x:auto;
+}
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+th{
+    background:#3daab3;
+    color:white;
+    padding:12px;
+}
+td{
+    padding:11px;
+    border-bottom:1px solid #d4eaec;
+    text-align:center;
+}
+tr:hover{
+    background:#edfafa;
+}
+/* =========================
+   MENSAJES
+========================= */
+.mensaje{
+    padding:12px;
+    border-radius:8px;
+    margin:10px 0;
+    display:none;
+}
+.exito{
+    background:#d9f4ed;
+    color:#287c68;
+}
+.error{
+    background:#ffe0e0;
+    color:#9a4040;
+}
+/* =========================
+   RESPONSIVE
+========================= */
+@media(max-width:900px){
+    .sidebar{
+        position:relative;
+        width:100%;
+        height:auto;
+    }
+    .usuario{
+        position:relative;
+        bottom:auto;
+        left:auto;
+        right:auto;
+        margin-top:15px;
+    }
+    .contenido{
+        margin-left:0;
+    }
+    .tarjetas{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+@media(max-width:600px){
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+    .tarjetas{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+<body>
+<!-- =====================================================
+     LOGIN
+===================================================== -->
+<div id="login" class="login">
+<div class="login-box">
+<div class="logo">
+CE
+</div>
+<h1>CONTROL ESCOLAR</h1>
+<p>Gestión académica</p>
+<input
+type="text"
+id="usuario"
+placeholder="Usuario">
+<input
+type="password"
+id="password"
+placeholder="Contraseña">
+<button
+class="btn-principal"
+style="width:100%;"
+onclick="iniciarSesion()">
+🔐 Iniciar sesión
+</button>
+<p>
+Usuarios de prueba:
+<br>
+<strong>admin</strong> / 1234
+<br>
+<strong>control</strong> / 1234
+</p>
+<div id="mensajeLogin" class="mensaje"></div>
+</div>
+</div>
+<!-- =====================================================
+     SISTEMA
+===================================================== -->
+<div id="sistema">
+<!-- SIDEBAR -->
+<div class="sidebar">
+<h2>CONTROL<br>ESCOLAR</h2>
+<hr>
+<button onclick="mostrarSeccion('inicio')">
+🏠 Inicio
+</button>
+<button onclick="mostrarSeccion('estudiantes')">
+👨‍🎓 Estudiantes
+</button>
+<button onclick="mostrarSeccion('usuarios')">
+👤 Usuarios
+</button>
+<button onclick="mostrarSeccion('materias')">
+📚 Materias
+</button>
+<button onclick="mostrarSeccion('calificaciones')">
+📝 Calificaciones
+</button>
+<button onclick="mostrarSeccion('asistencias')">
+✅ Asistencias
+</button>
+<button onclick="mostrarSeccion('horarios')">
+🕐 Horarios
+</button>
+<button onclick="mostrarSeccion('solicitudes')">
+📄 Solicitudes
+</button>
+<button onclick="mostrarSeccion('reportes')">
+📊 Reportes
+</button>
+<div class="usuario">
+<div id="usuarioActual"></div>
+<button
+class="btn-rojo"
+onclick="cerrarSesion()">
+Cerrar sesión
+</button>
+</div>
+</div>
+<!-- CONTENIDO -->
+<div class="contenido">
+<!-- ================= INICIO ================= -->
+<div id="inicio" class="seccion activa">
+<div class="encabezado">
+<h1>Control Escolar</h1>
+<p>
+Bienvenido al sistema de gestión académica.
+</p>
+</div>
+<div class="tarjetas">
+<div class="tarjeta">
+<h3>Estudiantes</h3>
+<strong id="totalEstudiantes">
+0
+</strong>
+</div>
+<div class="tarjeta">
+<h3>Materias</h3>
+<strong id="totalMaterias">
+0
+</strong>
+</div>
+<div class="tarjeta">
+<h3>Calificaciones</h3>
+<strong id="totalCalificaciones">
+0
+</strong>
+</div>
+<div class="tarjeta">
+<h3>Solicitudes</h3>
+<strong id="totalSolicitudes">
+0
+</strong>
+</div>
+</div>
+</div>
+<!-- ================= ESTUDIANTES ================= -->
+<div id="estudiantes" class="seccion">
+<div class="panel">
+<h2>👨‍🎓 Estudiantes</h2>
+<div class="form-grid">
+<div class="campo">
+<label>Matrícula</label>
+<input id="matricula">
+</div>
+<div class="campo">
+<label>Nombre</label>
+<input id="nombre">
+</div>
+<div class="campo">
+<label>Apellido</label>
+<input id="apellido">
+</div>
+<div class="campo">
+<label>Grado</label>
+<input id="grado">
+</div>
+<div class="campo">
+<label>Grupo</label>
+<input id="grupo">
+</div>
+<div class="campo">
+<label>Correo</label>
+<input id="correo">
+</div>
+<div class="campo">
+<label>Teléfono</label>
+<input id="telefono">
+</div>
+</div>
+<button
+class="btn-principal"
+onclick="guardarEstudiante()">
+➕ Guardar estudiante
+</button>
+</div>
+<div class="panel">
+<input
+id="buscarEstudiante"
+placeholder="🔎 Buscar estudiante..."
+onkeyup="mostrarEstudiantes()">
+<div class="tabla-contenedor">
+<table>
+<thead>
+<tr>
+<th>Matrícula</th>
+<th>Nombre</th>
+<th>Grado</th>
+<th>Grupo</th>
+<th>Correo</th>
+<th>Acción</th>
+</tr>
+</thead>
+<tbody id="tablaEstudiantes"></tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- ================= USUARIOS ================= -->
+<div id="usuarios" class="seccion">
+<div class="panel">
+<h2>👤 Usuarios</h2>
+<div class="form-grid">
+<input
+id="nuevoUsuario"
+placeholder="Usuario">
+<input
+id="nuevoPassword"
+placeholder="Contraseña"
+type="password">
+<select id="nuevoRol">
+<option>Administrador</option>
+<option>Docente</option>
+<option>Estudiante</option>
+<option>Control Escolar</option>
+</select>
+</div>
+<button
+class="btn-principal"
+onclick="guardarUsuario()">
+Guardar usuario
+</button>
+</div>
+<div class="panel">
+<table>
+<thead>
+<tr>
+<th>Usuario</th>
+<th>Rol</th>
+<th>Acción</th>
+</tr>
+</thead>
+<tbody id="tablaUsuarios"></tbody>
+</table>
+</div>
+</div>
+<!-- ================= MATERIAS ================= -->
+<div id="materias" class="seccion">
+<div class="panel">
+<h2>📚 Materias</h2>
+<input
+id="nombreMateria"
+placeholder="Nombre de la materia">
+<input
+id="docenteMateria"
+placeholder="Nombre del docente">
+<button
+class="btn-principal"
+onclick="guardarMateria()">
+➕ Guardar materia
+</button>
+</div>
+<div class="panel">
+<table>
+<thead>
+<tr>
+<th>Materia</th>
+<th>Docente</th>
+<th>Acción</th>
+</tr>
+</thead>
+<tbody id="tablaMaterias"></tbody>
+</table>
+</div>
+</div>
+<!-- ================= CALIFICACIONES ================= -->
+<div id="calificaciones" class="seccion">
+<div class="panel">
+<h2>📝 Calificaciones</h2>
+<select id="calAlumno"></select>
+<select id="calMateria"></select>
+<select id="calParcial">
+<option value="1">Parcial 1</option>
+<option value="2">Parcial 2</option>
+<option value="3">Parcial 3</option>
+</select>
+<input
+id="calificacion"
+type="number"
+min="0"
+max="10"
+step="0.1"
+placeholder="Calificación">
+<button
+class="btn-principal"
+onclick="guardarCalificacion()">
+Guardar calificación
+</button>
+</div>
+<div class="panel">
+<table>
+<thead>
+<tr>
+<th>Alumno</th>
+<th>Materia</th>
+<th>Parcial</th>
+<th>Calificación</th>
+<th>Acción</th>
+</tr>
+</thead>
+<tbody id="tablaCalificaciones"></tbody>
+</table>
+</div>
+</div>
+<!-- ================= ASISTENCIAS ================= -->
+<div id="asistencias" class="seccion">
+<div class="panel">
+<h2>✅ Asistencias</h2>
+<select id="asisAlumno"></select>
+<input
+id="asisFecha"
+type="date">
+<select id="asisEstado">
+<option>Presente</option>
+<option>Ausente</option>
+</select>
+<button
+class="btn-principal"
+onclick="guardarAsistencia()">
+Guardar asistencia
+</button>
+</div>
+<div class="panel">
+<table>
+<thead>
+<tr>
+<th>Alumno</th>
+<th>Fecha</th>
+<th>Estado</th>
+<th>Acción</th>
+</tr>
+</thead>
+<tbody id="tablaAsistencias"></tbody>
+</table>
+</div>
+</div>
+<!-- ================= HORARIOS ================= -->
+<div id="horarios" class="seccion">
+<div class="panel">
+<h2>🕐 Horarios</h2>
+<div class="form-grid">
+<input id="horGrupo" placeholder="Grupo">
+<input id="horMateria" placeholder="Materia">
+<select id="horDia">
+<option>Lunes</option>
+<option>Martes</option>
+<option>Miércoles</option>
+<option>Jueves</option>
+<option>Viernes</option>
+</select>
+<input id="horInicio" type="time">
+<input id="horFin" type="time">
+</div>
+<button
+class="btn-principal"
+onclick="guardarHorario()">
+Guardar horario
+</button>
+</div>
+<div class="panel">
+<table>
+<thead>
+<tr>
+<th>Grupo</th>
+<th>Materia</th>
+<th>Día</th>
+<th>Inicio</th>
+<th>Fin</th>
+<th>Acción</th>
+</tr>
+</thead>
+<tbody id="tablaHorarios"></tbody>
+</table>
+</div>
+</div>
+<!-- ================= SOLICITUDES ================= -->
+<div id="solicitudes" class="seccion">
+<div class="panel">
+<h2>📄 Solicitudes</h2>
+<select id="solAlumno"></select>
+<select id="solTipo">
+<option>Constancia de estudios</option>
+<option>Historial académico</option>
+<option>Cambio de grupo</option>
+<option>Corrección de datos</option>
+<option>Baja temporal</option>
+<option>Otro</option>
+</select>
+<textarea
+id="solMotivo"
+placeholder="Motivo de la solicitud"></textarea>
+<button
+class="btn-principal"
+onclick="guardarSolicitud()">
+Guardar solicitud
+</button>
+</div>
+<div class="panel">
+<table>
+<thead>
+<tr>
+<th>Alumno</th>
+<th>Tipo</th>
+<th>Fecha</th>
+<th>Motivo</th>
+<th>Estado</th>
+<th>Acción</th>
+</tr>
+</thead>
+<tbody id="tablaSolicitudes"></tbody>
+</table>
+</div>
+</div>
+<!-- ================= REPORTES ================= -->
+<div id="reportes" class="seccion">
+<div class="panel">
+<h2>📊 Reportes</h2>
+<div class="tarjetas">
+<div class="tarjeta">
+<h3>Estudiantes</h3>
+<strong id="reporteEstudiantes">0</strong>
+</div>
+<div class="tarjeta">
+<h3>Materias</h3>
+<strong id="reporteMaterias">0</strong>
+</div>
+<div class="tarjeta">
+<h3>Calificaciones</h3>
+<strong id="reporteCalificaciones">0</strong>
+</div>
+<div class="tarjeta">
+<h3>Solicitudes</h3>
+<strong id="reporteSolicitudes">0</strong>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+/* =====================================================
+   BASE DE DATOS INDEXEDDB
+===================================================== */
+let db;
+let solicitudDB =
+indexedDB.open("ControlEscolarDB",1);
+solicitudDB.onupgradeneeded=function(e){
+db=e.target.result;
+let tablas=[
+"usuarios",
+"estudiantes",
+"materias",
+"calificaciones",
+"asistencias",
+"horarios",
+"solicitudes"
+];
+tablas.forEach(nombre=>{
+if(!db.objectStoreNames.contains(nombre)){
+db.createObjectStore(nombre,{
+keyPath:"id",
+autoIncrement:true
+});
+}
+});
+};
+solicitudDB.onsuccess=function(e){
+db=e.target.result;
+crearDatosIniciales();
+};
+/* =====================================================
+   FUNCIONES DE BASE DE DATOS
+===================================================== */
+function agregar(tabla,dato,callback){
+let trans=db.transaction(tabla,"readwrite");
+let store=trans.objectStore(tabla);
+store.add(dato);
+trans.oncomplete=()=>{
+if(callback) callback();
+};
+}
+function obtenerTodos(tabla,callback){
+let trans=db.transaction(tabla,"readonly");
+let store=trans.objectStore(tabla);
+let request=store.getAll();
+request.onsuccess=()=>{
+callback(request.result);
+};
+}
+function eliminar(tabla,id,callback){
+let trans=db.transaction(tabla,"readwrite");
+trans.objectStore(tabla).delete(id);
+trans.oncomplete=()=>{
+if(callback) callback();
+};
+}
+/* =====================================================
+   DATOS INICIALES
+===================================================== */
+function crearDatosIniciales(){
+obtenerTodos("usuarios",usuarios=>{
+if(usuarios.length===0){
+agregar("usuarios",{
+usuario:"admin",
+password:"1234",
+rol:"Administrador"
+});
+agregar("usuarios",{
+usuario:"control",
+password:"1234",
+rol:"Control Escolar"
+});
+agregar("usuarios",{
+usuario:"docente",
+password:"1234",
+rol:"Docente"
+});
+}
+});
+}
+/* =====================================================
+   LOGIN
+===================================================== */
+function iniciarSesion(){
+let usuario=
+document.getElementById("usuario").value.trim();
+let password=
+document.getElementById("password").value;
+obtenerTodos("usuarios",usuarios=>{
+let encontrado=
+usuarios.find(u=>
+u.usuario===usuario &&
+u.password===password
+);
+if(encontrado){
+document.getElementById("login").style.display="none";
+document.getElementById("sistema").style.display="block";
+document.getElementById("usuarioActual").innerHTML=
+"👤 "+encontrado.usuario+
+"<br><small>"+encontrado.rol+"</small>";
+actualizarTodo();
+}else{
+alert("Usuario o contraseña incorrectos.");
+}
+});
+}
+/* =====================================================
+   CERRAR SESIÓN
+===================================================== */
+function cerrarSesion(){
+document.getElementById("sistema").style.display="none";
+document.getElementById("login").style.display="flex";
+document.getElementById("usuario").value="";
+document.getElementById("password").value="";
+}
+/* =====================================================
+   CAMBIAR SECCIÓN
+===================================================== */
+function mostrarSeccion(id){
+document.querySelectorAll(".seccion")
+.forEach(s=>s.classList.remove("activa"));
+document.getElementById(id)
+.classList.add("activa");
+actualizarTodo();
+}
+/* =====================================================
+   ESTUDIANTES
+===================================================== */
+function guardarEstudiante(){
+let estudiante={
+matricula:matricula.value.trim(),
+nombre:nombre.value.trim(),
+apellido:apellido.value.trim(),
+grado:grado.value.trim(),
+grupo:grupo.value.trim(),
+correo:correo.value.trim(),
+telefono:telefono.value.trim()
+};
+if(
+!estudiante.matricula||
+!estudiante.nombre||
+!estudiante.apellido||
+!estudiante.grado||
+!estudiante.grupo
+){
+alert("Completa los campos obligatorios.");
+return;
+}
+agregar("estudiantes",estudiante,()=>{
+alert("Estudiante guardado correctamente.");
+matricula.value="";
+nombre.value="";
+apellido.value="";
+grado.value="";
+grupo.value="";
+correo.value="";
+telefono.value="";
+mostrarEstudiantes();
+});
+}
+function mostrarEstudiantes(){
+obtenerTodos("estudiantes",lista=>{
+let buscar=
+document.getElementById("buscarEstudiante")
+.value.toLowerCase();
+tablaEstudiantes.innerHTML="";
+lista
+.filter(e=>
+(e.nombre+" "+
+e.apellido+" "+
+e.matricula)
+.toLowerCase()
+.includes(buscar)
+)
+.forEach(e=>{
+tablaEstudiantes.innerHTML+=`
+<tr>
+<td>${e.matricula}</td>
+<td>${e.nombre} ${e.apellido}</td>
+<td>${e.grado}</td>
+<td>${e.grupo}</td>
+<td>${e.correo}</td>
+<td>
+<button
+class="btn-rojo"
+onclick="eliminarDato('estudiantes',${e.id})">
+Eliminar
+</button>
+</td>
+</tr>
+`;
+});
+});
+}
+/* =====================================================
+   USUARIOS
+===================================================== */
+function guardarUsuario(){
+let usuario=nuevoUsuario.value.trim();
+let password=nuevoPassword.value;
+let rol=nuevoRol.value;
+if(!usuario||!password){
+alert("Completa los datos.");
+return;
+}
+agregar("usuarios",{
+usuario,
+password,
+rol
+},()=>{
+alert("Usuario guardado.");
+nuevoUsuario.value="";
+nuevoPassword.value="";
+mostrarUsuarios();
+});
+}
+function mostrarUsuarios(){
+obtenerTodos("usuarios",lista=>{
+tablaUsuarios.innerHTML="";
+lista.forEach(u=>{
+tablaUsuarios.innerHTML+=`
+<tr>
+<td>${u.usuario}</td>
+<td>${u.rol}</td>
+<td>
+<button
+class="btn-rojo"
+onclick="eliminarDato('usuarios',${u.id})">
+Eliminar
+</button>
+</td>
+</tr>
+`;
+});
+});
+}
+/* =====================================================
+   MATERIAS
+===================================================== */
+function guardarMateria(){
+let materia={
+nombre:nombreMateria.value.trim(),
+docente:docenteMateria.value.trim()
+};
+if(!materia.nombre||!materia.docente){
+alert("Completa los datos.");
+return;
+}
+agregar("materias",materia,()=>{
+alert("Materia guardada.");
+nombreMateria.value="";
+docenteMateria.value="";
+mostrarMaterias();
+});
+}
+function mostrarMaterias(){
+obtenerTodos("materias",lista=>{
+tablaMaterias.innerHTML="";
+calMateria.innerHTML="";
+lista.forEach(m=>{
+tablaMaterias.innerHTML+=`
+<tr>
+<td>${m.nombre}</td>
+<td>${m.docente}</td>
+<td>
+<button
+class="btn-rojo"
+onclick="eliminarDato('materias',${m.id})">
+Eliminar
+</button>
+</td>
+</tr>
+`;
+calMateria.innerHTML+=`
+<option>${m.nombre}</option>
+`;
+});
+});
+}
+/* =====================================================
+   CALIFICACIONES
+===================================================== */
+function cargarAlumnos(){
+obtenerTodos("estudiantes",lista=>{
+calAlumno.innerHTML="";
+asisAlumno.innerHTML="";
+solAlumno.innerHTML="";
+lista.forEach(a=>{
+let texto=
+`${a.matricula} - ${a.nombre} ${a.apellido}`;
+calAlumno.innerHTML+=
+`<option value="${a.id}">${texto}</option>`;
+asisAlumno.innerHTML+=
+`<option value="${a.id}">${texto}</option>`;
+solAlumno.innerHTML+=
+`<option value="${a.id}">${texto}</option>`;
+});
+});
+}
+function guardarCalificacion(){
+if(!calAlumno.value){
+alert("Registra primero un estudiante.");
+return;
+}
+let dato={
+alumno:Number(calAlumno.value),
+materia:calMateria.value,
+parcial:calParcial.value,
+calificacion:Number(calificacion.value)
+};
+if(
+isNaN(dato.calificacion)||
+dato.calificacion<0||
+dato.calificacion>10
+){
+alert("La calificación debe estar entre 0 y 10.");
+return;
+}
+agregar("calificaciones",dato,()=>{
+alert("Calificación guardada.");
+calificacion.value="";
+mostrarCalificaciones();
+});
+}
+function mostrarCalificaciones(){
+obtenerTodos("calificaciones",lista=>{
+obtenerTodos("estudiantes",alumnos=>{
+tablaCalificaciones.innerHTML="";
+lista.forEach(c=>{
+let alumno=
+alumnos.find(a=>a.id===c.alumno);
+if(!alumno)return;
+tablaCalificaciones.innerHTML+=`
+<tr>
+<td>${alumno.nombre} ${alumno.apellido}</td>
+<td>${c.materia}</td>
+<td>${c.parcial}</td>
+<td>${c.calificacion}</td>
+<td>
+<button
+class="btn-rojo"
+onclick="eliminarDato('calificaciones',${c.id})">
+Eliminar
+</button>
+</td>
+</tr>
+`;
+});
+});
+});
+}
+/* =====================================================
+   ASISTENCIAS
+===================================================== */
+function guardarAsistencia(){
+if(!asisAlumno.value){
+alert("Registra primero un estudiante.");
+return;
+}
+if(!asisFecha.value){
+alert("Selecciona una fecha.");
+return;
+}
+agregar("asistencias",{
+alumno:Number(asisAlumno.value),
+fecha:asisFecha.value,
+estado:asisEstado.value
+},()=>{
+alert("Asistencia guardada.");
+mostrarAsistencias();
+});
+}
+function mostrarAsistencias(){
+obtenerTodos("asistencias",lista=>{
+obtenerTodos("estudiantes",alumnos=>{
+tablaAsistencias.innerHTML="";
+lista.forEach(a=>{
+let alumno=
+alumnos.find(x=>x.id===a.alumno);
+if(!alumno)return;
+tablaAsistencias.innerHTML+=`
+<tr>
+<td>${alumno.nombre} ${alumno.apellido}</td>
+<td>${a.fecha}</td>
+<td>${a.estado}</td>
+<td>
+<button
+class="btn-rojo"
+onclick="eliminarDato('asistencias',${a.id})">
+Eliminar
+</button>
+</td>
+</tr>
+`;
+});
+});
+});
+}
+/* =====================================================
+   HORARIOS
+===================================================== */
+function guardarHorario(){
+let dato={
+grupo:horGrupo.value.trim(),
+materia:horMateria.value.trim(),
+dia:horDia.value,
+inicio:horInicio.value,
+fin:horFin.value
+};
+if(
+!dato.grupo||
+!dato.materia||
+!dato.inicio||
+!dato.fin
+){
+alert("Completa todos los campos.");
+return;
+}
+if(dato.inicio>=dato.fin){
+alert("La hora final debe ser posterior.");
+return;
+}
+agregar("horarios",dato,()=>{
+alert("Horario guardado.");
+horGrupo.value="";
+horMateria.value="";
+horInicio.value="";
+horFin.value="";
+mostrarHorarios();
+});
+}
+function mostrarHorarios(){
+obtenerTodos("horarios",lista=>{
+tablaHorarios.innerHTML="";
+lista.forEach(h=>{
+tablaHorarios.innerHTML+=`
+<tr>
+<td>${h.grupo}</td>
+<td>${h.materia}</td>
+<td>${h.dia}</td>
+<td>${h.inicio}</td>
+<td>${h.fin}</td>
+<td>
+<button
+class="btn-rojo"
+onclick="eliminarDato('horarios',${h.id})">
+Eliminar
+</button>
+</td>
+</tr>
+`;
+});
+});
+}
+/* =====================================================
+   SOLICITUDES
+===================================================== */
+function guardarSolicitud(){
+if(!solAlumno.value){
+alert("Selecciona un estudiante.");
+return;
+}
+if(!solMotivo.value.trim()){
+alert("Escribe el motivo.");
+return;
+}
+agregar("solicitudes",{
+alumno:Number(solAlumno.value),
+tipo:solTipo.value,
+fecha:new Date().toLocaleDateString(),
+motivo:solMotivo.value.trim(),
+estado:"Pendiente"
+},()=>{
+alert("Solicitud guardada.");
+solMotivo.value="";
+mostrarSolicitudes();
+});
+}
+function mostrarSolicitudes(){
+obtenerTodos("solicitudes",lista=>{
+obtenerTodos("estudiantes",alumnos=>{
+tablaSolicitudes.innerHTML="";
+lista.forEach(s=>{
+let alumno=
+alumnos.find(a=>a.id===s.alumno);
+if(!alumno)return;
+tablaSolicitudes.innerHTML+=`
+<tr>
+<td>${alumno.nombre} ${alumno.apellido}</td>
+<td>${s.tipo}</td>
+<td>${s.fecha}</td>
+<td>${s.motivo}</td>
+<td>${s.estado}</td>
+<td>
+<button
+class="btn-rojo"
+onclick="eliminarDato('solicitudes',${s.id})">
+Eliminar
+</button>
+</td>
+</tr>
+`;
+});
+});
+});
+}
+/* =====================================================
+   ELIMINAR
+===================================================== */
+function eliminarDato(tabla,id){
+if(!confirm("¿Seguro que deseas eliminar este registro?")){
+return;
+}
+eliminar(tabla,id,()=>{
+actualizarTodo();
+});
+}
+/* =====================================================
+   ACTUALIZAR TODO
+===================================================== */
+function actualizarTodo(){
+mostrarEstudiantes();
+mostrarUsuarios();
+mostrarMaterias();
+cargarAlumnos();
+mostrarCalificaciones();
+mostrarAsistencias();
+mostrarHorarios();
+mostrarSolicitudes();
+actualizarReportes();
+}
+/* =====================================================
+   REPORTES
+===================================================== */
+function actualizarReportes(){
+obtenerTodos("estudiantes",e=>{
+totalEstudiantes.innerText=e.length;
+reporteEstudiantes.innerText=e.length;
+});
+obtenerTodos("materias",m=>{
+totalMaterias.innerText=m.length;
+reporteMaterias.innerText=m.length;
+});
+obtenerTodos("calificaciones",c=>{
+totalCalificaciones.innerText=c.length;
+reporteCalificaciones.innerText=c.length;
+});
+obtenerTodos("solicitudes",s=>{
+totalSolicitudes.innerText=s.length;
+reporteSolicitudes.innerText=s.length;
+});
+}
+</script>
+</body>
+</html>
